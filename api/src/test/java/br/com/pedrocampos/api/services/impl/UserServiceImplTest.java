@@ -3,6 +3,7 @@ package br.com.pedrocampos.api.services.impl;
 import br.com.pedrocampos.api.domain.User;
 import br.com.pedrocampos.api.domain.dto.UserDTO;
 import br.com.pedrocampos.api.repositories.UserRepository;
+import br.com.pedrocampos.api.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -61,19 +62,19 @@ class UserServiceImplTest {
     }
 
     @Test
-    void findAll() {
-    }
+    void whenFindByIdThenReturnAnObjectNotFoundException() {
+        // Given
+        when(userRepository.findById(anyInt()))
+                .thenThrow(new ObjectNotFoundException("Usuário não encontrado"));
 
-    @Test
-    void create() {
-    }
-
-    @Test
-    void update() {
-    }
-
-    @Test
-    void delete() {
+        try {
+            // When
+            userService.findById(ID);
+        } catch (Exception ex) {
+            // Then
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("Usuário não encontrado", ex.getMessage());
+        }
     }
 
     private void startUser() {
