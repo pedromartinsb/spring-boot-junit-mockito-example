@@ -98,8 +98,6 @@ class UserServiceImplTest {
         assertEquals(PASSWORD, response.get(INDEX).getPassword());
     }
 
-    @Test
-
     void startUser() {
         this.user = new User(ID, NAME, EMAIL, PASSWORD);
         this.userDTO = new UserDTO(ID, NAME, EMAIL, PASSWORD);
